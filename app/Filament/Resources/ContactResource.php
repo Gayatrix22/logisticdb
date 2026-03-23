@@ -37,6 +37,7 @@ class ContactResource extends Resource
             TextColumn::make('message')->label('Message'),
             TextColumn::make('created_at')->dateTime(),
             ])
+            
             ->filters([
                 //
             ])
