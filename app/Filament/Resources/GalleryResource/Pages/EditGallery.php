@@ -16,13 +16,4 @@ class EditGallery extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
-
-    protected function mutateFormDataBeforeSave(array $data): array
-    {
-        if (isset($data['images'])) {
-            $data['image'] = $data['images'][0] ?? null;
-        }
-
-        return $data;
-    }
 }

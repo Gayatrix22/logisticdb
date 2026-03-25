@@ -16,10 +16,4 @@ class ListGalleries extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
-    protected function getTableBulkActions(): array
-{
-    return [
-        DeleteBulkAction::make(),
-    ];
-}
 }
