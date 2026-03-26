@@ -28,11 +28,7 @@ class GalleryResource extends Resource
                     ->directory('gallery')
                     ->required(),
 
-                Forms\Components\Textarea::make('description')
-                    ->label('Description')
-                    ->rows(3),
-
-                    Forms\Components\Select::make('category')
+                Forms\Components\Select::make('category')
                   ->label('Category')
                   ->options([
                     'Truck' => 'Truck',
@@ -53,9 +49,6 @@ class GalleryResource extends Resource
 
                 Tables\Columns\TextColumn::make('category')
                     ->searchable(),
-
-                Tables\Columns\TextColumn::make('description')
-                    ->limit(30),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

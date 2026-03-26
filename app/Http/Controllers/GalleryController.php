@@ -7,6 +7,16 @@ use App\Models\Gallery;
 
 class GalleryController extends Controller
 {
+    public function index()
+{
+    return Gallery::latest()->get()->map(function ($item) {
+        return [
+            'id' => $item->id,
+            'category' => $item->category,
+            'image' => asset('storage/' . $item->image),
+        ];
+    });
+}
     public function store(Request $request)
 {
     $request->validate([

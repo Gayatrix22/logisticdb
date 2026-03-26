@@ -21,6 +21,3 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('galleries', GalleryController::class);
-Route::post('/gallery', [GalleryController::class, 'store']);
-Route::get('/gallery', [GalleryController::class, 'index']);
