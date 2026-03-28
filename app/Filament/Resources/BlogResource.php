@@ -9,7 +9,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Str;
+use Illuminate\Support\Str; // ✅ important
 
 class BlogResource extends Resource
 {
@@ -22,45 +22,41 @@ class BlogResource extends Resource
     {
         return $form->schema([
 
-            Forms\Components\TextInput::make('title')
-                ->required()
-                ->live(onBlur: true)
-                ->afterStateUpdated(fn ($state, $set) =>
-                    $set('slug', Str::slug($state))
-                ),
+        Forms\Components\TextInput::make('title')
+            ->required()
+            ->live(onBlur: true)
+            ->afterStateUpdated(fn ($state, $set) => 
+                $set('slug', Str::slug($state))
+            ),
 
-            Forms\Components\TextInput::make('slug')
-                ->required()
-                ->unique(ignoreRecord: true),
+        Forms\Components\TextInput::make('slug')
+            ->required()
+            ->unique(ignoreRecord: true),
 
-            Forms\Components\Textarea::make('short_description')
-                ->rows(3),
+        Forms\Components\Textarea::make('short_description')
+            ->rows(3),
 
-            Forms\Components\Textarea::make('description')
-                ->label('Description')
-                ->rows(4),
+        Forms\Components\Textarea::make('description')
+            ->label('Description')
+            ->rows(4),
 
-            Forms\Components\RichEditor::make('content')
-    ->required()
-    ->columnSpanFull(),
+        Forms\Components\Textarea::make('content')
+            ->required()
+            ->rows(6),
 
-            // ✅ MAIN IMAGE FIXED
-            Forms\Components\FileUpload::make('main_image')
-                ->image()
-                ->disk('public') // 🔥 IMPORTANT
-                ->directory('blogs/main'),
+        Forms\Components\FileUpload::make('main_image')
+            ->image()
+            ->directory('blogs/main'),
 
-            // ✅ GALLERY IMAGES FIXED
-            Forms\Components\FileUpload::make('gallery_images')
-                ->image()
-                ->multiple()
-                ->disk('public') // 🔥 IMPORTANT
-                ->directory('blogs/gallery'),
+        Forms\Components\FileUpload::make('gallery_images')
+            ->image()
+            ->multiple()
+            ->directory('blogs/gallery'),
 
-            Forms\Components\TagsInput::make('tags'),
+        Forms\Components\TagsInput::make('tags'),
 
-        ]);
-    }
+    ]);
+}
 
     // ✅ TABLE
     public static function table(Table $table): Table
@@ -68,9 +64,7 @@ class BlogResource extends Resource
         return $table
             ->columns([
 
-                // ✅ IMAGE SHOW FIXED
                 Tables\Columns\ImageColumn::make('main_image')
-                    ->disk('public') // 🔥 IMPORTANT
                     ->label('Image'),
 
                 Tables\Columns\TextColumn::make('title')
