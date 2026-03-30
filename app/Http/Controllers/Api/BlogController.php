@@ -7,23 +7,21 @@ use App\Models\Blog;
 
 class BlogController extends Controller
 {
-    // 🔹 All blogs
-   public function index()
-{
-    return response()->json(
-        Blog::orderBy('id', 'desc')->get()
-    );
-}   
 
-    // 🔹 Single blog (IMPORTANT FIX)
-    public function show($id)
+    // 🔹 All blogs
+  
+    public function index()
     {
-        $blog = Blog::find($id);
+        return response()->json(Blog::latest()->get());
+    }
+
+    public function show($slug)
+    {
+        $blog = Blog::where('slug', $slug)->first();
 
         if (!$blog) {
-            return response()->json([
-                'message' => 'Blog not found'
-            ], 404);
+            return response()->json(['message' => 'Blog not found'], 404);
+
         }
 
         return response()->json($blog);
