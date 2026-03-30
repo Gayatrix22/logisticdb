@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\GalleryController;
 use App\Models\Gallery;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Api\BlogController;
 
 Route::get('/galleries', function () {
     return Gallery::latest()->get()->map(function ($item) {
@@ -20,9 +21,6 @@ Route::get('/galleries', function () {
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-
-
-use App\Http\Controllers\Api\BlogController;
 
 Route::get('/blogs', [BlogController::class, 'index']);
 Route::get('/blogs/{slug}', [BlogController::class, 'show']);
