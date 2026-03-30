@@ -22,6 +22,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+
 Route::post('/contact', [ContactController::class, 'store']);
 
 use App\Http\Controllers\Api\BlogController;
@@ -31,5 +32,6 @@ Route::get('/blogs/{slug}', [BlogController::class, 'show']);
 
 
 
+Route::post('/contact', [ContactController::class, 'store']);
 
 
