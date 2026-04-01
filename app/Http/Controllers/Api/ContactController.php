@@ -8,23 +8,31 @@ use App\Models\Contact;
 
 class ContactController extends Controller
 {
-    public function store(Request $request)
-    {
-        $contact = Contact::create([
-            'name' => $request->name,
-            'company' => $request->company,
-            'city' => $request->city,
-            'state' => $request->state,
-            'country' => $request->country,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'message' => $request->message,
+   public function store(Request $request)
+{
+      \Log::info('Contact API hit', $request->all());
+    try {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'company' => 'nullable|string|max:255',
+            'city' => 'required|string',
+            'state' => 'required|string',
+            'country' => 'required|string',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'message' => 'required|string',
         ]);
 
+        // TEMP: just return success (no DB yet)
         return response()->json([
             'status' => true,
-            'message' => 'Saved successfully',
-            'data' => $contact
+            'message' => 'Contact saved successfully'
         ]);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => false,
+            'error' => $e->getMessage()
+        ], 500);
     }
-}
+}}
