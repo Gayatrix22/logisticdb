@@ -30,6 +30,7 @@ Route::post('/contact', [ContactController::class, 'store']);
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,6 +47,7 @@ Route::get('/test', function () {
 });
 
 // Blogs API (MAIN ROUTE)
+
 
 Route::get('/blogs', [BlogController::class, 'index']);
 
