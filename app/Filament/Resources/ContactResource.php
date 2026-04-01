@@ -24,7 +24,7 @@ class ContactResource extends Resource
     {
         return $form
             ->schema([
-                //
+            
             ]);
     }
 
