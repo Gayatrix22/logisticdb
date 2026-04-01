@@ -23,7 +23,7 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
 
-        // TEMP: just return success (no DB yet)
+        Contact::create($validated);
         return response()->json([
             'status' => true,
             'message' => 'Contact saved successfully'
