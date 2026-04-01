@@ -23,14 +23,10 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-<<<<<<< HEAD
-=======
 
 Route::post('/contact', [ContactController::class, 'store']);
 
-use App\Http\Controllers\Api\BlogController;
 
->>>>>>> 6fda69e34d7c994f62d78775943e409d89b7305c
 Route::get('/blogs', [BlogController::class, 'index']);
 Route::get('/blogs/{slug}', [BlogController::class, 'show']);
 
