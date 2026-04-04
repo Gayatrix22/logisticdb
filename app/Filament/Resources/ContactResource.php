@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ContactResource\Pages;
-use App\Filament\Resources\ContactResource\RelationManagers;
 use App\Models\Contact;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
 
 class ContactResource extends Resource
@@ -20,30 +17,56 @@ class ContactResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    // ❌ Disable create button
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    // ✅ Enable delete permission
+    public static function canDelete($record): bool
+    {
+        return true;
+    }
+
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-            
-            ]);
+        return $form->schema([
+            // No form fields needed (since create disabled)
+        ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-            TextColumn::make('name')->label('Name')->searchable(),
-            TextColumn::make('email')->label('Email'),
-            TextColumn::make('message')->label('Message'),
-            TextColumn::make('created_at')->dateTime(),
+                TextColumn::make('name')
+                    ->label('Name')
+                    ->searchable(),
+
+                TextColumn::make('email')
+                    ->label('Email'),
+
+                TextColumn::make('message')
+                    ->label('Message')
+                    ->limit(50), // short preview
+
+                TextColumn::make('created_at')
+                    ->label('Date')
+                    ->dateTime(),
             ])
-            
-            ->filters([
-                //
-            ])
+
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->icon('heroicon-o-pencil'),
+
+                Tables\Actions\DeleteAction::make()
+                    ->label('Delete')
+                    ->icon('heroicon-o-trash')
+                    ->color('danger')
+                    ->requiresConfirmation(), // popup before delete
             ])
+
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -53,15 +76,9 @@ class ContactResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-
-        ];
+        return [];
     }
 
-    public static function canCreate(): bool
-{
-    return false;
-}
     public static function getPages(): array
     {
         return [
